@@ -43,6 +43,12 @@ output "kube_config" {
   sensitive = true
 }
 
+output "live_kube_config" {
+  description = "Live kubeconfig pulled from the root server."
+  value       = base64decode(data.external.live_kube_config.result.kubeconfig_b64)
+  sensitive   = true
+}
+
 output "summary" {
   description = "Current state of k3s (version & nodes)."
   value = {

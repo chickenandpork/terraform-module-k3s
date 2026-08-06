@@ -94,6 +94,7 @@ module "k3s" {
 | Name | Description |
 |------|-------------|
 | <a name="output_kube_config"></a> [kube\_config](#output\_kube\_config) | Genereated kubeconfig. |
+| <a name="output_live_kube_config"></a> [live\_kube\_config](#output\_live\_kube_config) | Live kubeconfig pulled from the root server. |
 | <a name="output_kubernetes"></a> [kubernetes](#output\_kubernetes) | Authentication credentials of Kubernetes (full administrator). |
 | <a name="output_kubernetes_cluster_secret"></a> [kubernetes\_cluster\_secret](#output\_kubernetes\_cluster\_secret) | Secret token used to join nodes to the cluster |
 | <a name="output_kubernetes_ready"></a> [kubernetes\_ready](#output\_kubernetes\_ready) | Dependency endpoint to synchronize k3s installation and provisioning. |
@@ -103,6 +104,7 @@ module "k3s" {
 
 | Name | Version |
 |------|---------|
+| <a name="provider_external"></a> [external](#provider\_external) | ~> 2.0 |
 | <a name="provider_http"></a> [http](#provider\_http) | ~> 3.0 |
 | <a name="provider_null"></a> [null](#provider\_null) | ~> 3.0 |
 | <a name="provider_random"></a> [random](#provider\_random) | ~> 3.0 |
