@@ -43,9 +43,34 @@ output "kube_config" {
   sensitive = true
 }
 
+locals {
+  live_kube_config_raw = yamldecode(
+    base64decode(data.external.live_kube_config.result.kubeconfig_b64)
+  )
+
+  live_kube_config = merge(
+    local.live_kube_config_raw,
+    {
+      clusters = [
+        for item in local.live_kube_config_raw.clusters : merge(
+          item,
+          {
+            cluster = merge(
+              item.cluster,
+              {
+                server = "https://${local.root_server_connection.host}:6443"
+              }
+            )
+          }
+        )
+      ]
+    }
+  )
+}
+
 output "live_kube_config" {
   description = "Live kubeconfig pulled from the root server."
-  value       = base64decode(data.external.live_kube_config.result.kubeconfig_b64)
+  value       = yamlencode(local.live_kube_config)
   sensitive   = true
 }
 
