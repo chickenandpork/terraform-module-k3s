@@ -64,6 +64,10 @@ def write_temp(content: str, suffix: str = "") -> str:
     return path
 
 
+def normalize_private_key(content: str) -> str:
+    return content.replace("\r\n", "\n").replace("\r", "\n").rstrip("\n") + "\n"
+
+
 def build_ssh_base_args(connection: dict, helper_path: str, temp_paths: List[str]) -> Tuple[List[str], Dict[str, str]]:
     if connection.get("type", "ssh") != "ssh":
         fail(f"unsupported connection type: {connection.get('type')}")
@@ -99,7 +103,9 @@ def build_ssh_base_args(connection: dict, helper_path: str, temp_paths: List[str
         args += ["-o", "StrictHostKeyChecking=accept-new"]
 
     if connection.get("private_key"):
-        private_key_path = write_temp(str(connection["private_key"]))
+        private_key_path = write_temp(
+            normalize_private_key(str(connection["private_key"]))
+        )
         temp_paths.append(private_key_path)
         args += ["-i", private_key_path, "-o", "IdentitiesOnly=yes"]
 
